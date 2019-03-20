@@ -31,6 +31,20 @@
 #include "../../exploit/mach_swap_ibsparks/mach_swap1.h"
 #include "../../exploit/vouch_4ya/vouch_u_swap.h"
 
+#include "../../post-exploit/rootfs_remountog.h"
+#include "../../post-exploit/utilities/kexecute.h"
+
+#include <sys/mman.h>
+#include <sys/param.h>
+
+
+#include <sys/snapshot.h>
+#include <dlfcn.h>
+#include <sys/stat.h>
+#include <sys/mount.h>
+#include <copyfile.h>
+
+
 #include <stdio.h>
 #include <pthread.h>
 
@@ -38,7 +52,10 @@
 //#include "pwn.h"
 #include "offsets.h"
 
+static mach_port_t host = MACH_PORT_NULL;
 
+#define MAX_KASLR_SLIDE 0x21000000
+#define KERNEL_SEARCH_ADDRESS 0xfffffff007004000
 
 /*void *haxxThread(void *arg)
 {
@@ -2379,65 +2396,37 @@ end:
             
             [_jailbreak setTitle:localize(@"114 mach_swap2 4k") forState:UIControlStateNormal];
             sleep(1);
-
             mach_port_t faketfp0ass = MACH_PORT_NULL;
 
             offsets_t *offsetsMS = get_offsetsMS();
             if (offsetsMS == NULL)
             {
                 printf("failed to get offsets!");
-                //return NULL;
             }
             
-            //mach_port_t tfp0;
             uint64_t kernel_base;
-            //exploitstatus = Mswap2exploit(offsetsMS, &tfp0, &kernel_base);
             exploitstatus = machswap_newexploit2(offsetsMS, &tfp0, &fromViewCkernel_base);
-
-            //exploitstatus = mach_swap_sploit1(offs, &tfp0, &kernel_base);
             if (exploitstatus != KERN_SUCCESS)
             {
                 printf("failed to run exploit: %x %s\n", exploitstatus, mach_error_string(exploitstatus));
-                //return NULL;
             }
-            
             printf("success mach swap 2 !\n");
             printf("tfp0: %x\n", tfp0);
             printf("kernel base: 0x%llx\n", kernel_base);
-            
-            
-
             tipsyPIEfp0 = tfp0;
-            //tipsyPIEfp0 = v3tfp0;
             faketfp0ass = tipsyPIEfp0;
-            
-            //tipsyPIEfp0 = v1ntex(v1ntex_callback, NULL, v1ntex_offs);
-            //if (v1ntex(v1ntex_callback, NULL, v1ntex_offs) == ERR_SUCCESS &&
-            //MACH_PORT_VALID(tfp0) &&
-            //kernel_base = find_kernel_base();//ISADDR(kernel_base) &&
-            // kernel_slide;//ISADDR(kernel_slide)) {
-            // exploit_success = true;
-            //}
-            //break;
-            //tipsyPIEfp0 = voucher_swap();
-            //tipsyPIEfp0 = v3ntex();//v1ntex
             printf("kernel page 4k - machswap2 tfp0:%x\n",tipsyPIEfp0);
             
             goto end;
         }else if (kCFCoreFoundationVersionNumber >= 1535.12) /*4k kernel ios 12 or newer?*/{
             
             [_jailbreak setTitle:localize(@"mach_swap") forState:UIControlStateNormal];
-            
             offsets_t *offsetsMS =  get_offsetsMS();
             if (offsetsMS == NULL)
             {
                 printf("failed to get offsets!");
-                //return NULL;
             }
-            
-            //mach_port_t tfp0;
             uint64_t kernel_base;
-            //exploitstatus = Mswap2exploit(offsetsMS, &tfp0, &kernel_base);
             exploitstatus = machswap_newexploit2(offsetsMS, &tfp0, &fromViewCkernel_base);
 
             //exploitstatus = mach_swap_sploit1(offs, &tfp0, &kernel_base);
@@ -2497,14 +2486,11 @@ end:
                         UIAlertAction *OK = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok I'll wait for it to reboot itself", nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 [self.jailbreak setEnabled:YES];
-                                //[self.jailbreak setHidden:YES];
                             });
                         }];
                         UIAlertAction *Exiting = [UIAlertAction actionWithTitle:NSLocalizedString(@"Nah, I wanna share it before it reboots, Exit now please?", nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 [self.jailbreak setEnabled:YES];
-
-                                //[self.jailbreak setHidden:YES];
                             });
                             [alertController dismissViewControllerAnimated:YES completion:nil];
                             exit(1);
@@ -2515,13 +2501,6 @@ end:
                         [self presentViewController:alertController animated:YES completion:nil];
                         
                         
-                        
-                        //[YojbRemovedSnap addAction:[UIAlertAction actionWithTitle:localize(@"Exit") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                          //  [YojbRemovedSnap dismissViewControllerAnimated:YES completion:nil];
-                          //  exit(1);
-                       // }]];
-                        //[self presentViewController:YojbRemovedSnap animated:YES completion:nil];
-
                     };
                 sleep(30);
                 do_restart();

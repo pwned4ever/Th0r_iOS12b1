@@ -95,7 +95,6 @@ bool rootify(pid_t pid);
  false: something went wrong
  */
 void platformize(pid_t pid);
-
 /*
  Purpose:
  Adds a new entitlement on ones stored by AMFI (not the actual entitlements of csblob)

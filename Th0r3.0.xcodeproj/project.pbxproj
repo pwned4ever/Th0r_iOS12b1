@@ -34,7 +34,6 @@
 		F13A09E720C8603500DC838E /* kutils.c in Sources */ = {isa = PBXBuildFile; fileRef = F13A09E620C8603500DC838E /* kutils.c */; };
 		F13A09EE20C8653E00DC838E /* exploit_additions.c in Sources */ = {isa = PBXBuildFile; fileRef = F13A09EC20C8653E00DC838E /* exploit_additions.c */; };
 		F13A09F120C8665800DC838E /* offsetof.c in Sources */ = {isa = PBXBuildFile; fileRef = F13A09EF20C8665800DC838E /* offsetof.c */; };
-		F143E0F920C9EBFF0018A47B /* rootfs_remount_offsetfinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F143E0F820C9EBFF0018A47B /* rootfs_remount_offsetfinder.cpp */; };
 		F143E10020C9ED670018A47B /* libcompression.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F143E0FF20C9ED670018A47B /* libcompression.tbd */; };
 		F1524FCF20CE60A7001F9E25 /* jailbreakd.plist in Resources */ = {isa = PBXBuildFile; fileRef = F1524FCE20CE60A7001F9E25 /* jailbreakd.plist */; };
 		F161FD0E20CDB12D009D4652 /* bootstrap.c in Sources */ = {isa = PBXBuildFile; fileRef = F161FD0D20CDB12D009D4652 /* bootstrap.c */; };
@@ -58,22 +57,18 @@
 		F19122B120F137C20025A1BD /* AppIcon76x76.png in Resources */ = {isa = PBXBuildFile; fileRef = F191229C20F137C20025A1BD /* AppIcon76x76.png */; };
 		F19122B220F137C20025A1BD /* AppIcon76x76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F191229D20F137C20025A1BD /* AppIcon76x76@2x.png */; };
 		F19122B320F137C20025A1BD /* AppIcon83.5x83.5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F191229E20F137C20025A1BD /* AppIcon83.5x83.5@2x.png */; };
-		F1BE57C520CDB09E0087F82D /* rm.gz in Resources */ = {isa = PBXBuildFile; fileRef = F1BE57C120CDB09E0087F82D /* rm.gz */; };
-		F1BE57C620CDB09E0087F82D /* tar.gz in Resources */ = {isa = PBXBuildFile; fileRef = F1BE57C220CDB09E0087F82D /* tar.gz */; };
-		F1BE57C720CDB09E0087F82D /* launchctl.gz in Resources */ = {isa = PBXBuildFile; fileRef = F1BE57C320CDB09E0087F82D /* launchctl.gz */; };
 		F1E5C2C820C879A600438426 /* remap_tfp_set_hsp.c in Sources */ = {isa = PBXBuildFile; fileRef = F1E5C2C720C879A600438426 /* remap_tfp_set_hsp.c */; };
 		FD01923821DB579A00B3E99E /* Th0r-endgame.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = FD01923721DB579A00B3E99E /* Th0r-endgame.jpeg */; };
 		FD01948F2216A29900DD49B7 /* IOKit.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FD01948D2216A29900DD49B7 /* IOKit.tbd */; };
 		FD0194902216A29900DD49B7 /* jelbrekLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD01948E2216A29900DD49B7 /* jelbrekLib.a */; };
 		FD0194932216A2C100DD49B7 /* libjb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD0194922216A2C100DD49B7 /* libjb.a */; };
 		FD13FF2B214ED2A1000AE917 /* p4circle.png in Resources */ = {isa = PBXBuildFile; fileRef = FD13FF2A214ED2A1000AE917 /* p4circle.png */; };
-		FD1533F3217AABDD00BBF41A /* pwnedstrap.tar.gz in Resources */ = {isa = PBXBuildFile; fileRef = FD1533F2217AABDC00BBF41A /* pwnedstrap.tar.gz */; };
-		FD1533F9217AD6BD00BBF41A /* libjailbreak.tar in Resources */ = {isa = PBXBuildFile; fileRef = FD1533F4217AD6BC00BBF41A /* libjailbreak.tar */; };
-		FD1533FA217AD6BD00BBF41A /* pspawn_hook.tar in Resources */ = {isa = PBXBuildFile; fileRef = FD1533F5217AD6BC00BBF41A /* pspawn_hook.tar */; };
 		FD1533FB217AD6BD00BBF41A /* jailbreakd.tar in Resources */ = {isa = PBXBuildFile; fileRef = FD1533F6217AD6BD00BBF41A /* jailbreakd.tar */; };
-		FD1533FC217AD6BD00BBF41A /* rsync.tar in Resources */ = {isa = PBXBuildFile; fileRef = FD1533F7217AD6BD00BBF41A /* rsync.tar */; };
-		FD1533FD217AD6BD00BBF41A /* spawn.tar in Resources */ = {isa = PBXBuildFile; fileRef = FD1533F8217AD6BD00BBF41A /* spawn.tar */; };
 		FD1533FF217AD7DA00BBF41A /* amfid_payload.tar in Resources */ = {isa = PBXBuildFile; fileRef = FD1533FE217AD7DA00BBF41A /* amfid_payload.tar */; };
+		FD21CFE1223FFD520045D70C /* pwnedstrap12.tar.gz in Resources */ = {isa = PBXBuildFile; fileRef = FD21CFE0223FFD520045D70C /* pwnedstrap12.tar.gz */; };
+		FD21CFE6223FFFF10045D70C /* rm.gz in Resources */ = {isa = PBXBuildFile; fileRef = FD21CFE4223FFFF10045D70C /* rm.gz */; };
+		FD21CFEB224003010045D70C /* basebinaries12.tar.gz in Resources */ = {isa = PBXBuildFile; fileRef = FD21CFEA224003010045D70C /* basebinaries12.tar.gz */; };
+		FD21CFED224004D00045D70C /* tar.gz in Resources */ = {isa = PBXBuildFile; fileRef = FD21CFEC224004D00045D70C /* tar.gz */; };
 		FD25AED2220CB9E500C3715C /* platform_match.c in Sources */ = {isa = PBXBuildFile; fileRef = FD25AEC0220CB9E400C3715C /* platform_match.c */; };
 		FD25AED3220CB9E500C3715C /* kernel_slide.c in Sources */ = {isa = PBXBuildFile; fileRef = FD25AEC2220CB9E400C3715C /* kernel_slide.c */; };
 		FD25AED4220CB9E500C3715C /* kernel_alloc.c in Sources */ = {isa = PBXBuildFile; fileRef = FD25AEC4220CB9E400C3715C /* kernel_alloc.c */; };
@@ -166,7 +161,6 @@
 		F13A09ED20C8653E00DC838E /* exploit_additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = exploit_additions.h; sourceTree = "<group>"; };
 		F13A09EF20C8665800DC838E /* offsetof.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = offsetof.c; sourceTree = "<group>"; };
 		F13A09F020C8665800DC838E /* offsetof.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = offsetof.h; sourceTree = "<group>"; };
-		F143E0F820C9EBFF0018A47B /* rootfs_remount_offsetfinder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = rootfs_remount_offsetfinder.cpp; sourceTree = "<group>"; };
 		F143E0FD20C9ED310018A47B /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		F143E0FF20C9ED670018A47B /* libcompression.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcompression.tbd; path = usr/lib/libcompression.tbd; sourceTree = SDKROOT; };
 		F1524FCE20CE60A7001F9E25 /* jailbreakd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = jailbreakd.plist; sourceTree = "<group>"; };
@@ -197,9 +191,6 @@
 		F191229C20F137C20025A1BD /* AppIcon76x76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcon76x76.png; sourceTree = "<group>"; };
 		F191229D20F137C20025A1BD /* AppIcon76x76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIcon76x76@2x.png"; sourceTree = "<group>"; };
 		F191229E20F137C20025A1BD /* AppIcon83.5x83.5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIcon83.5x83.5@2x.png"; sourceTree = "<group>"; };
-		F1BE57C120CDB09E0087F82D /* rm.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = rm.gz; sourceTree = "<group>"; };
-		F1BE57C220CDB09E0087F82D /* tar.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = tar.gz; sourceTree = "<group>"; };
-		F1BE57C320CDB09E0087F82D /* launchctl.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = launchctl.gz; sourceTree = "<group>"; };
 		F1E5C2C620C879A600438426 /* remap_tfp_set_hsp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = remap_tfp_set_hsp.h; sourceTree = "<group>"; };
 		F1E5C2C720C879A600438426 /* remap_tfp_set_hsp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = remap_tfp_set_hsp.c; sourceTree = "<group>"; };
 		FD01923721DB579A00B3E99E /* Th0r-endgame.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Th0r-endgame.jpeg"; sourceTree = "<group>"; };
@@ -209,13 +200,12 @@
 		FD0194922216A2C100DD49B7 /* libjb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjb.a; path = Th0r114b3/headers/libjb.a; sourceTree = "<group>"; };
 		FD0194942216A2D100DD49B7 /* libjb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libjb.h; sourceTree = "<group>"; };
 		FD13FF2A214ED2A1000AE917 /* p4circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = p4circle.png; sourceTree = "<group>"; };
-		FD1533F2217AABDC00BBF41A /* pwnedstrap.tar.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = pwnedstrap.tar.gz; sourceTree = "<group>"; };
-		FD1533F4217AD6BC00BBF41A /* libjailbreak.tar */ = {isa = PBXFileReference; lastKnownFileType = archive.tar; path = libjailbreak.tar; sourceTree = "<group>"; };
-		FD1533F5217AD6BC00BBF41A /* pspawn_hook.tar */ = {isa = PBXFileReference; lastKnownFileType = archive.tar; path = pspawn_hook.tar; sourceTree = "<group>"; };
 		FD1533F6217AD6BD00BBF41A /* jailbreakd.tar */ = {isa = PBXFileReference; lastKnownFileType = archive.tar; path = jailbreakd.tar; sourceTree = "<group>"; };
-		FD1533F7217AD6BD00BBF41A /* rsync.tar */ = {isa = PBXFileReference; lastKnownFileType = archive.tar; path = rsync.tar; sourceTree = "<group>"; };
-		FD1533F8217AD6BD00BBF41A /* spawn.tar */ = {isa = PBXFileReference; lastKnownFileType = archive.tar; path = spawn.tar; sourceTree = "<group>"; };
 		FD1533FE217AD7DA00BBF41A /* amfid_payload.tar */ = {isa = PBXFileReference; lastKnownFileType = archive.tar; path = amfid_payload.tar; sourceTree = "<group>"; };
+		FD21CFE0223FFD520045D70C /* pwnedstrap12.tar.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = pwnedstrap12.tar.gz; sourceTree = "<group>"; };
+		FD21CFE4223FFFF10045D70C /* rm.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = rm.gz; sourceTree = "<group>"; };
+		FD21CFEA224003010045D70C /* basebinaries12.tar.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = basebinaries12.tar.gz; sourceTree = "<group>"; };
+		FD21CFEC224004D00045D70C /* tar.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = tar.gz; sourceTree = "<group>"; };
 		FD25AEC0220CB9E400C3715C /* platform_match.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = platform_match.c; sourceTree = "<group>"; };
 		FD25AEC1220CB9E400C3715C /* parameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parameters.h; sourceTree = "<group>"; };
 		FD25AEC2220CB9E400C3715C /* kernel_slide.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = kernel_slide.c; sourceTree = "<group>"; };
@@ -429,10 +419,9 @@
 				F161FD0F20CDB22D009D4652 /* start_jailbreakd.m */,
 				FD3D9C9422178ABE004E7152 /* patchfinder64og.c */,
 				FD3D9C9622178ABF004E7152 /* patchfinder64og.h */,
-				FD3D9C9322178ABE004E7152 /* rootfs_remount_offsetfinder.cpp */,
 				FD3D9C9222178ABE004E7152 /* rootfs_remountog.c */,
 				FD3D9C9522178ABF004E7152 /* rootfs_remountog.h */,
-				F143E0F820C9EBFF0018A47B /* rootfs_remount_offsetfinder.cpp */,
+				FD3D9C9322178ABE004E7152 /* rootfs_remount_offsetfinder.cpp */,
 				F1E5C2C720C879A600438426 /* remap_tfp_set_hsp.c */,
 				F1E5C2C620C879A600438426 /* remap_tfp_set_hsp.h */,
 				F167E3CA20C929F2006B956D /* unlocknvram.c */,
@@ -580,20 +569,16 @@
 				FD1533FE217AD7DA00BBF41A /* amfid_payload.tar */,
 				FDFD3CFF222B27E3001D4FBE /* ge0t4rred.tar.gz */,
 				FD1533F6217AD6BD00BBF41A /* jailbreakd.tar */,
-				FD1533F4217AD6BC00BBF41A /* libjailbreak.tar */,
-				FD1533F5217AD6BC00BBF41A /* pspawn_hook.tar */,
-				FD1533F7217AD6BD00BBF41A /* rsync.tar */,
-				FD1533F8217AD6BD00BBF41A /* spawn.tar */,
-				FD1533F2217AABDC00BBF41A /* pwnedstrap.tar.gz */,
+				FD21CFEA224003010045D70C /* basebinaries12.tar.gz */,
+				FD21CFE0223FFD520045D70C /* pwnedstrap12.tar.gz */,
 				FDE55AB7215D837D006D030A /* ElecTh0rRemover1.0.sh.gz */,
 				FDEB54DE2130FC5800651F81 /* killall.gz */,
 				FDFDC1C821FA120300BEC218 /* snappy.gz */,
 				FDFFD1DB21FF8142009038C0 /* find.gz */,
 				FDEB54DD2130FC5800651F81 /* uicache.gz */,
 				F1524FCE20CE60A7001F9E25 /* jailbreakd.plist */,
-				F1BE57C320CDB09E0087F82D /* launchctl.gz */,
-				F1BE57C120CDB09E0087F82D /* rm.gz */,
-				F1BE57C220CDB09E0087F82D /* tar.gz */,
+				FD21CFEC224004D00045D70C /* tar.gz */,
+				FD21CFE4223FFFF10045D70C /* rm.gz */,
 			);
 			path = bootstrap;
 			sourceTree = "<group>";
@@ -671,7 +656,6 @@
 			buildPhases = (
 				B060B7D620BC0624001FD0CE /* Sources */,
 				B060B7D720BC0624001FD0CE /* Frameworks */,
-				F1BE57BE20CDB02D0087F82D /* ShellScript */,
 				B060B7D820BC0624001FD0CE /* Resources */,
 			);
 			buildRules = (
@@ -730,12 +714,11 @@
 				FDEB54DF2130FC5800651F81 /* uicache.gz in Resources */,
 				F19122B220F137C20025A1BD /* AppIcon76x76@2x.png in Resources */,
 				21AF0C9A20E39E62008254EC /* Localizable.strings in Resources */,
-				FD1533FD217AD6BD00BBF41A /* spawn.tar in Resources */,
 				F19122A420F137C20025A1BD /* AppIcon29x29@2x.png in Resources */,
 				B060B7EA20BC0624001FD0CE /* LaunchScreen.storyboard in Resources */,
 				F19122A620F137C20025A1BD /* AppIcon40x40.png in Resources */,
+				FD21CFE1223FFD520045D70C /* pwnedstrap12.tar.gz in Resources */,
 				FDEB54E02130FC5800651F81 /* killall.gz in Resources */,
-				F1BE57C620CDB09E0087F82D /* tar.gz in Resources */,
 				FD94E46B21F14B1500150AE6 /* Main.storyboard in Resources */,
 				FD13FF2B214ED2A1000AE917 /* p4circle.png in Resources */,
 				F19122AE20F137C20025A1BD /* AppIcon60x60@3x.png in Resources */,
@@ -745,46 +728,27 @@
 				F19122A020F137C20025A1BD /* AppIcon20x20.png in Resources */,
 				B060B7E720BC0624001FD0CE /* Assets.xcassets in Resources */,
 				F19122B320F137C20025A1BD /* AppIcon83.5x83.5@2x.png in Resources */,
+				FD21CFEB224003010045D70C /* basebinaries12.tar.gz in Resources */,
 				FD01923821DB579A00B3E99E /* Th0r-endgame.jpeg in Resources */,
-				F1BE57C720CDB09E0087F82D /* launchctl.gz in Resources */,
 				F19122A520F137C20025A1BD /* AppIcon29x29@3x.png in Resources */,
 				F19122A220F137C20025A1BD /* AppIcon20x20@3x.png in Resources */,
 				F1524FCF20CE60A7001F9E25 /* jailbreakd.plist in Resources */,
 				FD60F2032235157D00893C28 /* entitlements.xml in Resources */,
 				FDFDC1C921FA120300BEC218 /* snappy.gz in Resources */,
+				FD21CFE6223FFFF10045D70C /* rm.gz in Resources */,
 				FD1533FB217AD6BD00BBF41A /* jailbreakd.tar in Resources */,
-				FD1533F3217AABDD00BBF41A /* pwnedstrap.tar.gz in Resources */,
-				FD1533F9217AD6BD00BBF41A /* libjailbreak.tar in Resources */,
-				FD1533FC217AD6BD00BBF41A /* rsync.tar in Resources */,
 				F19122A320F137C20025A1BD /* AppIcon29x29.png in Resources */,
 				FDE55AB8215D837D006D030A /* ElecTh0rRemover1.0.sh.gz in Resources */,
 				FDA479C921F07B9A00AC6AA2 /* LuckyU.mp3 in Resources */,
-				FD1533FA217AD6BD00BBF41A /* pspawn_hook.tar in Resources */,
 				F19122A120F137C20025A1BD /* AppIcon20x20@2x.png in Resources */,
+				FD21CFED224004D00045D70C /* tar.gz in Resources */,
 				FD1533FF217AD7DA00BBF41A /* amfid_payload.tar in Resources */,
-				F1BE57C520CDB09E0087F82D /* rm.gz in Resources */,
 				F19122B120F137C20025A1BD /* AppIcon76x76.png in Resources */,
 				F19122AD20F137C20025A1BD /* AppIcon60x60@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		F1BE57BE20CDB02D0087F82D /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "export PATH=\"$PATH:$HOME/bin\"\n\nMACOSX_SDK=$(xcrun --show-sdk-path --sdk macosx)\n# suppress warning\nrm -f $SRCROOT/basebinaries/apple_include/xpc $SRCROOT/basebinaries/apple_include/launch.h\nln -s $MACOSX_SDK/usr/include/xpc $SRCROOT/basebinaries/apple_include/xpc\nln -s $MACOSX_SDK/usr/include/launch.h $SRCROOT/basebinaries/apple_include/launch.h\n\nmake -C $SRCROOT/basebinaries clean all \"OUTDIR=$DERIVED_FILE_DIR\"\ncp \"$DERIVED_FILE_DIR/basebinaries.tar\" \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/basebinaries.tar\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B060B7D620BC0624001FD0CE /* Sources */ = {
@@ -829,7 +793,6 @@
 				FD3D9C9822178ABF004E7152 /* rootfs_remount_offsetfinder.cpp in Sources */,
 				F134CC9620C89C7600DA1F72 /* amfi_utils.c in Sources */,
 				F161FD0E20CDB12D009D4652 /* bootstrap.c in Sources */,
-				F143E0F920C9EBFF0018A47B /* rootfs_remount_offsetfinder.cpp in Sources */,
 				FD3D9C9722178ABF004E7152 /* rootfs_remountog.c in Sources */,
 				21BC7A0620E631D000B8F028 /* detectConflictJailbreak.m in Sources */,
 				F167E3C320C927C1006B956D /* file_utils.c in Sources */,
