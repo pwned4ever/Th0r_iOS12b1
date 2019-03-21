@@ -63,8 +63,6 @@
 		FD0194902216A29900DD49B7 /* jelbrekLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD01948E2216A29900DD49B7 /* jelbrekLib.a */; };
 		FD0194932216A2C100DD49B7 /* libjb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD0194922216A2C100DD49B7 /* libjb.a */; };
 		FD13FF2B214ED2A1000AE917 /* p4circle.png in Resources */ = {isa = PBXBuildFile; fileRef = FD13FF2A214ED2A1000AE917 /* p4circle.png */; };
-		FD1533FB217AD6BD00BBF41A /* jailbreakd.tar in Resources */ = {isa = PBXBuildFile; fileRef = FD1533F6217AD6BD00BBF41A /* jailbreakd.tar */; };
-		FD1533FF217AD7DA00BBF41A /* amfid_payload.tar in Resources */ = {isa = PBXBuildFile; fileRef = FD1533FE217AD7DA00BBF41A /* amfid_payload.tar */; };
 		FD21CFE1223FFD520045D70C /* pwnedstrap12.tar.gz in Resources */ = {isa = PBXBuildFile; fileRef = FD21CFE0223FFD520045D70C /* pwnedstrap12.tar.gz */; };
 		FD21CFE6223FFFF10045D70C /* rm.gz in Resources */ = {isa = PBXBuildFile; fileRef = FD21CFE4223FFFF10045D70C /* rm.gz */; };
 		FD21CFEB224003010045D70C /* basebinaries12.tar.gz in Resources */ = {isa = PBXBuildFile; fileRef = FD21CFEA224003010045D70C /* basebinaries12.tar.gz */; };
@@ -200,8 +198,6 @@
 		FD0194922216A2C100DD49B7 /* libjb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjb.a; path = Th0r114b3/headers/libjb.a; sourceTree = "<group>"; };
 		FD0194942216A2D100DD49B7 /* libjb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libjb.h; sourceTree = "<group>"; };
 		FD13FF2A214ED2A1000AE917 /* p4circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = p4circle.png; sourceTree = "<group>"; };
-		FD1533F6217AD6BD00BBF41A /* jailbreakd.tar */ = {isa = PBXFileReference; lastKnownFileType = archive.tar; path = jailbreakd.tar; sourceTree = "<group>"; };
-		FD1533FE217AD7DA00BBF41A /* amfid_payload.tar */ = {isa = PBXFileReference; lastKnownFileType = archive.tar; path = amfid_payload.tar; sourceTree = "<group>"; };
 		FD21CFE0223FFD520045D70C /* pwnedstrap12.tar.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = pwnedstrap12.tar.gz; sourceTree = "<group>"; };
 		FD21CFE4223FFFF10045D70C /* rm.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = rm.gz; sourceTree = "<group>"; };
 		FD21CFEA224003010045D70C /* basebinaries12.tar.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = basebinaries12.tar.gz; sourceTree = "<group>"; };
@@ -566,9 +562,7 @@
 		F1BE57C020CDB0780087F82D /* bootstrap */ = {
 			isa = PBXGroup;
 			children = (
-				FD1533FE217AD7DA00BBF41A /* amfid_payload.tar */,
 				FDFD3CFF222B27E3001D4FBE /* ge0t4rred.tar.gz */,
-				FD1533F6217AD6BD00BBF41A /* jailbreakd.tar */,
 				FD21CFEA224003010045D70C /* basebinaries12.tar.gz */,
 				FD21CFE0223FFD520045D70C /* pwnedstrap12.tar.gz */,
 				FDE55AB7215D837D006D030A /* ElecTh0rRemover1.0.sh.gz */,
@@ -736,13 +730,11 @@
 				FD60F2032235157D00893C28 /* entitlements.xml in Resources */,
 				FDFDC1C921FA120300BEC218 /* snappy.gz in Resources */,
 				FD21CFE6223FFFF10045D70C /* rm.gz in Resources */,
-				FD1533FB217AD6BD00BBF41A /* jailbreakd.tar in Resources */,
 				F19122A320F137C20025A1BD /* AppIcon29x29.png in Resources */,
 				FDE55AB8215D837D006D030A /* ElecTh0rRemover1.0.sh.gz in Resources */,
 				FDA479C921F07B9A00AC6AA2 /* LuckyU.mp3 in Resources */,
 				F19122A120F137C20025A1BD /* AppIcon20x20@2x.png in Resources */,
 				FD21CFED224004D00045D70C /* tar.gz in Resources */,
-				FD1533FF217AD7DA00BBF41A /* amfid_payload.tar in Resources */,
 				F19122B120F137C20025A1BD /* AppIcon76x76.png in Resources */,
 				F19122AD20F137C20025A1BD /* AppIcon60x60@2x.png in Resources */,
 			);

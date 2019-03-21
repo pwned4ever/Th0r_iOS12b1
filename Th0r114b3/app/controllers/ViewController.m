@@ -57,34 +57,6 @@ static mach_port_t host = MACH_PORT_NULL;
 #define MAX_KASLR_SLIDE 0x21000000
 #define KERNEL_SEARCH_ADDRESS 0xfffffff007004000
 
-/*void *haxxThread(void *arg)
-{
-   /* kern_return_t ret;
-    
-    offsets_t *offs = get_offsetsMS();
-    if (offs == NULL)
-    {
-        LOG("failed to get offsets!");
-        return NULL;
-    }
-    
-    mach_port_t tfp0;
-    uint64_t kernel_base;
-    ret = mach_swap_sploit1(offs, &tfp0, &kernel_base);
-    if (ret != KERN_SUCCESS)
-    {
-        LOG("failed to run exploit: %x %s", ret, mach_error_string(ret));
-        return NULL;
-    }
-    
-    LOG("success!");
-    LOG("tfp0: %x", tfp0);
-    LOG("kernel base: 0x%llx", kernel_base);
-    
-    return NULL;
-}*/
-
-
 
 kern_return_t mach_vm_read_overwrite(vm_map_t target_task, mach_vm_address_t address, mach_vm_size_t size, mach_vm_address_t data, mach_vm_size_t *outsize);
 
@@ -113,50 +85,6 @@ static ViewController *currentViewController;
 
 // thx DoubleH3lix - thanks t1hmstar
 
-void DumpHex(const void* data, size_t size) {
-    char ascii[17];
-    size_t i, j;
-    ascii[16] = '\0';
-    for (i = 0; i < size; ++i) {
-        printf("%02X ", ((unsigned char*)data)[i]);
-        if (((unsigned char*)data)[i] >= ' ' && ((unsigned char*)data)[i] <= '~') {
-            ascii[i % 16] = ((unsigned char*)data)[i];
-        } else {
-            ascii[i % 16] = '.';
-        }
-        if ((i+1) % 8 == 0 || i+1 == size) {
-            printf(" ");
-            if ((i+1) % 16 == 0) {
-                printf("|  %s \n", ascii);
-            } else if (i+1 == size) {
-                ascii[(i+1) % 16] = '\0';
-                if ((i+1) % 16 <= 8) {
-                    printf(" ");
-                }
-                for (j = (i+1) % 16; j < 16; ++j) {
-                    printf("   ");
-                }
-                printf("|  %s \n", ascii);
-            }
-        }
-    }
-}
-
-kern_return_t dumpSomeKernel(task_t tfp0, kptr_t kbase, void *data){
-    kern_return_t err = 0;
-    char buf[0x1000] = {};
-    
-    mach_vm_size_t rSize = 0;
-    err = mach_vm_read_overwrite(tfp0, kbase, sizeof(buf), buf, &rSize);
-    
-    printf("some kernel:\n");
-    DumpHex(buf, sizeof(buf));
-    
-    printf("lol\n");
-    exit(0); //we are no shenanigans!
-    return err;
-}
-
 double uptime(){
     struct timeval boottime;
     size_t len = sizeof(boottime);
@@ -173,9 +101,6 @@ double uptime(){
     NSString *music=[[NSBundle mainBundle]pathForResource:@"LuckyU" ofType:@"mp3"];
     audioPlayer1=[[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:music]error:NULL];
     audioPlayer1.delegate=self;
-    //audioPlayer1.volume=-5;
-    //audioPlayer1.numberOfLoops=-1;
-    //[audioPlayer1 play];
     [audioPlayer1 stop];
 }
 - (IBAction)startmusic:(id)sender {
@@ -185,7 +110,6 @@ double uptime(){
     audioPlayer1.volume=1;
     audioPlayer1.numberOfLoops=-1;
     [audioPlayer1 play];
-    //[audioPlayer1 stop];}
 }
 
 -(void)updateProgressFromNotification:(id)sender{
@@ -282,20 +206,15 @@ double uptime(){
     
     myUiPickerView.delegate = self;
     myUiPickerView.dataSource = self;
-   // newTFcheckMyRemover4me =0;
     NSString *music=[[NSBundle mainBundle]pathForResource:@"LuckyU" ofType:@"mp3"];
     audioPlayer1=[[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:music]error:NULL];
     audioPlayer1.delegate=self;
     audioPlayer1.volume=1;
     audioPlayer1.numberOfLoops=-1;
     [audioPlayer1 play];
-    /**/
+
     uint32_t flags;
     csops(getpid(), CS_OPS_STATUS, &flags, 0);
-    //"/var/mobile/Media/.bootstrapped_electraremover"
-    //int rv = open("/var/mobile/Media/.bootstrapped_electraremover", O_RDWR|O_CREAT);
-    //close(rv);
-    //printf("hey CREATED testremover?: %d", rv);
     int checkuncovermarker = (file_exists("/.installed_unc0ver"));
     int checkth0rmarker = (file_exists("/.bootstrapped_Th0r"));
     int checkelectramarker = (file_exists("/.bootstrapped_electra"));
@@ -309,12 +228,8 @@ double uptime(){
     printf("Th0r marker exists?: %d\n",checkth0rmarker);
     printf("Electra marker exists?: %d\n",checkelectramarker);
     printf("Jailbreakd Run marker exists?: %d\n",checkjailbreakdRun);
-    
-    //pthread_t thd;
-    //pthread_create(&thd, NULL, &haxxThread, NULL);
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateProgressFromNotification:) name:@"JB" object:nil];
-    
     
     NSNotificationCenter* notificationCenter = [NSNotificationCenter defaultCenter];
     
@@ -976,83 +891,6 @@ end:
 bool newTFcheckofCyforce;
 bool testRebootcheck;
 bool newTFcheckMyRemover4me;
-
-void iosurface_die() {
-    kern_return_t err;
-    
-    io_service_t service = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("IOSurfaceRoot"));
-    
-    if (service == IO_OBJECT_NULL){
-        printf("unable to find service\n");
-        return;
-    }
-    
-    printf("got service port\n");
-    
-    io_connect_t conn = MACH_PORT_NULL;
-    err = IOServiceOpen(service, mach_task_self(), 0, &conn);
-    if (err != KERN_SUCCESS){
-        printf("unable to get user client connection\n");
-        return;
-    }
-    
-    printf("got user client: 0x%x\n", conn);
-    
-    uint64_t inputScalar[16];
-    uint64_t inputScalarCnt = 0;
-    
-    char inputStruct[4096];
-    size_t inputStructCnt = 0x18;
-    
-    
-    uint64_t* ivals = (uint64_t*)inputStruct;
-    ivals[0] = 1;
-    ivals[1] = 2;
-    ivals[2] = 3;
-    
-    uint64_t outputScalar[16];
-    uint32_t outputScalarCnt = 0;
-    
-    char outputStruct[4096];
-    size_t outputStructCnt = 0;
-    
-    mach_port_t port = MACH_PORT_NULL;
-    err = mach_port_allocate(mach_task_self(), MACH_PORT_RIGHT_RECEIVE, &port);
-    if (err != KERN_SUCCESS) {
-        printf("failed to allocate new port\n");
-        return;
-    }
-    printf("got wake port 0x%x\n", port);
-    mach_port_insert_right(mach_task_self(), port, port, MACH_MSG_TYPE_MAKE_SEND);
-    
-    uint64_t reference[8] = {0};
-    uint32_t referenceCnt = 1;
-    
-    /*for (int i = 0; i < 10; i++) {
-        err = IOConnectCallAsyncMethod(
-                                       conn,
-                                       17,
-                                       port,
-                                       reference,
-                                       referenceCnt,
-                                       inputScalar,
-                                       (uint32_t)inputScalarCnt,
-                                       inputStruct,
-                                       inputStructCnt,
-                                       outputScalar,
-                                       &outputScalarCnt,
-                                       outputStruct,
-                                       &outputStructCnt);
-        
-        printf("%x\n", err);
-    };
-     */
-    
-    return;
-}
-#define MAX_KASLR_SLIDE 0x21000000
-#define KERNEL_SEARCH_ADDRESS 0xfffffff007004000
-
 uint64_t Vnew_kernel_task_addr;
 
 kern_return_t exploit_callback_common(task_t kernel_task, kptr_t kbase, void *data) {
@@ -1122,7 +960,7 @@ int vfs_die() {
                 while (ERR_NOERR == 0){
                 //iosurface_die();
                     vfs_die();
-                    iosurface_die();
+                    //iosurface_die();
                     sleep(0.1);
                     postProgress(localize(@"Rebooting are we.."));
                     [_jailbreak setTitle:localize(@"Rebooting 1..") forState:UIControlStateNormal];
@@ -1779,620 +1617,34 @@ end:
         //1452.23 - 11.3.1
         //1452.24 - 11.4
         //
-        
-//if (kCFCoreFoundationVersionNumber < 1450.14)/*less < than iOS 11.2?*/{
-         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"12.0")){
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"11.2")){
             
-/*             if (!strcmp(u.machine, "iPhone9,1") || (!strcmp(u.machine, "iPhone9,3") || (!strcmp(u.machine, "iPhone9,2") || (!strcmp(u.machine, "iPhone9,4"))))) {
-                 printf("i7 & i7 + -----------\n");
-                 while ((ut = 39 - uptime()) > 0 ) {
-                     NSString *msg = [NSString stringWithFormat:localize(@"%s %ds"),u.machine, ut+21];
-                     dispatch_async(dispatch_get_main_queue(), ^{
-                         postProgress(msg);
-                     });
-                     sleep(1);
-                 }*/
                  [_jailbreak setTitle:localize(@"16k voucher swap") forState:UIControlStateNormal];
-                 
+            
                  sleep(1);
-                 
+            
                  mach_port_t faketfp0ass = MACH_PORT_NULL;
-                 /*offsets_t *offsetsMS = get_offsetsMS();
-                 if (offsetsMS == NULL)
-                 {
-                     printf("failed to get offsets!");
-                     //return NULL;
-                 }
-                 uint64_t fromViewCkernel_base;
-                 //exploitstatus = Mswap2exploit(offsetsMS, &tfp0, &fromViewCkernel_base);
-                 //exploitstatus = machswap_newexploit2(offsetsMS, &tfp0, &fromViewCkernel_base);
 
-                 //exploitstatus = mach_swap_sploit1(offs, &tfp0, &fromViewCkernel_base);
-                */
                  tfp0 = voucher_swap();
                  tipsyPIEfp0 = tfp0;
-                
-                 
-                 faketfp0ass = tipsyPIEfp0;
-                 uint64_t kernel_base;
-                 printf("kernel base: 0x%016llx\n", kernel_base);
+                 uint64_t kernel_base;      printf("kernel base: 0x%016llx\n", kernel_base);
                  printf("kernel base from mynewvouchSbase: 0x%016llx\n", mynewvouchSbase);
 
-                 uint64_t kbase;
-                 printf("kbase: 0x%llx\n", kbase);
-
-                 //uint64_t mynewbase;
-                 //sharekernbaseVS;
-                /* uint64_t mynewbaseMachS;
-                 printf("mynewbaseMachS: 0x%llx\n", mynewbaseMachS);
-
-                 init_kernel(fromViewCkernel_base, NULL);//Loads kernel into the patch finder, which just fetches the kernel memory for patchfinder use
-                 
-                 uint64_t slide = kernel_base - 0xFFFFFFF007004000;// Get the slide
-                 printf("slide: 0x%016llx\n", slide);
-                 */
-                 sleep(1);printf("voucher swap 16k tfp0:%x\n",tipsyPIEfp0);
-                 goto end;
-/*
-          //   }
-             [_jailbreak setTitle:localize(@"16k voucher swap") forState:UIControlStateNormal];
-             sleep(1);
-
-             mach_port_t faketfp0ass = MACH_PORT_NULL;
-             
-             offsets_t *offsetsMS = get_offsetsMS();
-             if (offsetsMS == NULL)
-             {
-                 printf("failed to get offsets!");
-                 //return NULL;
-             }
-
-
-             uint64_t kernel_base;
-             //exploitstatus = Mswap2exploit(offsetsMS, &tfp0, &kernel_base);
-             exploitstatus = machswap_newexploit2(offsetsMS, &tfp0, &fromViewCkernel_base);
-
-             //exploitstatus = mach_swap_sploit1(offs, &tfp0, &kernel_base);
-             if (exploitstatus != KERN_SUCCESS)
-             {
-                 printf("failed to run exploit: %x %s\n", exploitstatus, mach_error_string(exploitstatus));
-                 //return NULL;
-             }
-
-             printf("success!\n");
-*/
-             printf("tfp0: %x\n", tfp0);
-             printf("kernel base: 0x%llx\n", kernel_base);
-             //tipsyPIEfp0 = v1ntex(v1ntex_callback, NULL, v1ntex_offs);
-             tipsyPIEfp0 = tfp0;
-             NSString *msg = [NSString stringWithFormat:localize(@"tfp0:%x"),tipsyPIEfp0];
-             dispatch_async(dispatch_get_main_queue(), ^{
-                 postProgress(msg);
-             });
-             //tipsyPIEfp0 = voucher_swap();
-             faketfp0ass = tipsyPIEfp0;
-             //tipsyPIEfp0 = v3ntex();//v1ntex
-             printf("kernel page 16k - machswap2 tfp0:%x\n",tipsyPIEfp0);
-             goto end;
-             
-         }else if (SYSTEM_VERSION_LESS_THAN(@"11.2")){//(kCFCoreFoundationVersionNumber >= 1452.24) /*16k greater or equal to ios 11.4*/{
-            //kCFCoreFoundationVersionNumber < 1535.12 &&
-
-            /*16k kernel less than ios 12 newer than ios 11.2 works for all devices 11.2-11.4.1*/
-//(kCFCoreFoundationVersionNumber >= 1450.14 && kCFCoreFoundationVersionNumber <= 1452.23) /*16k kernel less than ios 12 newer than ios 11.2*/{
-            //kCFCoreFoundationVersionNumber < 1535.12 &&
-            if (!strcmp(u.machine, "iPhone8,1") || (!strcmp(u.machine, "iPhone8,2"))) {
-                printf("i6s & 6s+ -----------\n");
-                while ((ut = 99 - uptime()) > 0 ) {
-                    NSString *msg = [NSString stringWithFormat:localize(@"%s %ds"),u.machine, ut+21];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        postProgress(msg);
-                    });
-                    sleep(1);
-                }
-                [_jailbreak setTitle:localize(@"11.0-11.2.1 VFS sploit") forState:UIControlStateNormal];
-                
-                tipsyPIEfp0 = vfs_sploit();
-                NSString *msg = [NSString stringWithFormat:localize(@"DONE tfp0:%x"),tipsyPIEfp0];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    postProgress(msg);
-                });
-                sleep(1);printf("vfs 16k - mach tfp0:%x\n",tipsyPIEfp0);
-                goto end;
-
-            }else if (!strcmp(u.machine, "iPhone10,1") || (!strcmp(u.machine, "iPhone10,4") || (!strcmp(u.machine, "iPhone10,2") || (!strcmp(u.machine, "iPhone10,5"))))) {
-                printf("i8 & i8 + -----------\n");
-                while ((ut = 56 - uptime()) > 0 ) {
-                    NSString *msg = [NSString stringWithFormat:localize(@"%s %ds"),u.machine, ut+4];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        postProgress(msg);
-                    });
-                    sleep(1);
-                }
-                [_jailbreak setTitle:localize(@"11.0-11.2.1 VFS sploit") forState:UIControlStateNormal];
-                tipsyPIEfp0 = vfs_sploit();
-                NSString *msg = [NSString stringWithFormat:localize(@"DONE tfp0:%x"),tipsyPIEfp0];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    postProgress(msg);
-                });
-                sleep(1);printf("vfs 16k - mach tfp0:%x\n",tipsyPIEfp0);
-                goto end;
-            }
-            else if (!strcmp(u.machine, "iPhone10,3") || (!strcmp(u.machine, "iPhone10,6"))) {
-                printf("iX wait 60 -----------\n");
-                while ((ut = 40 - uptime()) > 0 ) {
-                    NSString *msg = [NSString stringWithFormat:localize(@"%s %ds"),u.machine, ut+20];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        postProgress(msg);
-                    });
-                    sleep(1);
-                }
-                [_jailbreak setTitle:localize(@"11.0-11.2.1 VFS sploit") forState:UIControlStateNormal];
-                tipsyPIEfp0 = vfs_sploit();
-                NSString *msg = [NSString stringWithFormat:localize(@"DONE tfp0:%x"),tipsyPIEfp0];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    postProgress(msg);
-                });
-                sleep(1);printf("vfs 16k - mach tfp0:%x\n",tipsyPIEfp0);
-                goto end;
-                
-            }else if (!strcmp(u.machine, "iPhone9,1") || (!strcmp(u.machine, "iPhone9,3") || (!strcmp(u.machine, "iPhone9,2") || (!strcmp(u.machine, "iPhone9,4"))))) {
-                printf("i7 & i7 + -----------\n");
-                while ((ut = 39 - uptime()) > 0 ) {
-                    NSString *msg = [NSString stringWithFormat:localize(@"%s %ds"),u.machine, ut+21];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        postProgress(msg);
-                    });
-                    sleep(1);
-                }
-                [_jailbreak setTitle:localize(@"11.0-11.2.1 VFS sploit") forState:UIControlStateNormal];
-                tipsyPIEfp0 = vfs_sploit();
-                NSString *msg = [NSString stringWithFormat:localize(@"DONE tfp0:%x"),tipsyPIEfp0];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    postProgress(msg);
-                });
-                sleep(1);printf("vfs 16k - mach tfp0:%x\n",tipsyPIEfp0);
-                goto end;
-                
-            }else if (!strcmp(u.machine, "iPhone8,4")) {
-                printf("iSE-----------\n");
-                while ((ut = 79 - uptime()) > 0 ) {
-                    NSString *msg = [NSString stringWithFormat:localize(@"%s %ds"),u.machine, ut+21];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        postProgress(msg);
-                    });
-                    sleep(1);
-                }
-                [_jailbreak setTitle:localize(@"11.0-11.2.1 VFS sploit") forState:UIControlStateNormal];
-                tipsyPIEfp0 = vfs_sploit();
-                NSString *msg = [NSString stringWithFormat:localize(@"DONE tfp0:%x"),tipsyPIEfp0];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    postProgress(msg);
-                });
-                sleep(1);printf("vfs 16k - mach tfp0:%x\n",tipsyPIEfp0);
-                goto end;
-            }else if (!strcmp(u.machine, "iPad7,1") || (!strcmp(u.machine, "iPad7,2") || (!strcmp(u.machine, "iPad7,3") || (!strcmp(u.machine, "iPad7,4") || (!strcmp(u.machine, "iPad7,5") || (!strcmp(u.machine, "iPad6,3") || (!strcmp(u.machine, "iPad6,4") || (!strcmp(u.machine, "iPad6,7") || (!strcmp(u.machine, "iPad6,8")))))))))) {
-                printf("iPad Pro 9, 10 & 12 in 2nd gen -----------\n");
-                while ((ut = 39 - uptime()) > 0 ) {
-                    NSString *msg = [NSString stringWithFormat:localize(@"%s %ds"),u.machine, ut+21];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        postProgress(msg);
-                    });
-                    sleep(1);
-                }
-                [_jailbreak setTitle:localize(@"11.0-12.1.2 Voucher swap") forState:UIControlStateNormal];
-                tipsyPIEfp0 = vfs_sploit();
-                tipsyPIEfp0 = voucher_swap();
-                NSString *msg = [NSString stringWithFormat:localize(@"DONE tfp0:%x"),tipsyPIEfp0];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    postProgress(msg);
-                });
-                sleep(1);printf("vfs 16k - mach tfp0:%x\n",tipsyPIEfp0);
-                goto end;
-            }else if (!strcmp(u.machine, "iPad5,3") || (!strcmp(u.machine, "iPad5,4") || (!strcmp(u.machine, "iPad4,2") || (!strcmp(u.machine, "iPad4,3"))))) {
-                printf("iPad air 1 & 2 -----------\n");
-                while ((ut = 99 - uptime()) > 0 ) {
-                    NSString *msg = [NSString stringWithFormat:localize(@"%s %ds"),u.machine, ut+14];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        postProgress(msg);
-                    });
-                    sleep(1);
-                }
-                [_jailbreak setTitle:localize(@"11.0-11.2.1 VFS sploit") forState:UIControlStateNormal];
-                tipsyPIEfp0 = vfs_sploit();
-                NSString *msg = [NSString stringWithFormat:localize(@"DONE tfp0:%x"),tipsyPIEfp0];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    postProgress(msg);
-                });
-                sleep(1);printf("vfs 16k - mach tfp0:%x\n",tipsyPIEfp0);
-                goto end;
-            }else if (!strcmp(u.machine, "iPad5,1") || (!strcmp(u.machine, "iPad5,2") || (!strcmp(u.machine, "iPad4,7") || (!strcmp(u.machine, "iPad4,8") || (!strcmp(u.machine, "iPad4,9")))))) {
-                printf("iPad mini 4 & 3 -----------\n");
-                
-                while ((ut = 116 - uptime()) > 0 ) {
-                    
-                    NSString *msg = [NSString stringWithFormat:localize(@"%s %ds"),u.machine, ut+4];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        postProgress(msg);
-                    });
-                    sleep(1);
-                }
-                [_jailbreak setTitle:localize(@"11.0-11.2.1 VFS sploit") forState:UIControlStateNormal];
-                tipsyPIEfp0 = vfs_sploit();
-                NSString *msg = [NSString stringWithFormat:localize(@"DONE tfp0:%x"),tipsyPIEfp0];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    postProgress(msg);
-                });
-                sleep(1);printf("machswap2 16k - tfp0:%x\n",tipsyPIEfp0);
-                goto end;
-            }
+                 uint64_t kbase;            printf("kbase: 0x%llx\n", kbase);
+                 NSString *msg = [NSString stringWithFormat:localize(@"tfp0:%x"),tipsyPIEfp0];
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     postProgress(msg);
+                 });
+                     sleep(1);printf("voucher swap 16k tfp0:%x\n",tipsyPIEfp0);
             
-         }else if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"11.2")){
-             [_jailbreak setTitle:localize(@"11.2-11.4.1 Voucher_Swap") forState:UIControlStateNormal];
-
-             mach_port_t faketfp0ass = MACH_PORT_NULL;
-             
-             offsets_t *offsetsMS = get_offsetsMS();
-             if (offsetsMS == NULL)
-             {
-                 printf("failed to get offsets!");
-                 //return NULL;
-             }
-             
-             //mach_port_t tfp0;
-             /*uint64_t kernel_base;
-              exploitstatus = mach_swap_sploit1(offs, &tfp0, &kernel_base);
-              if (exploitstatus != KERN_SUCCESS)
-              {
-              printf("failed to run exploit: %x %s\n", exploitstatus, mach_error_string(exploitstatus));
-              //return NULL;
-              }
-              
-              printf("success!\n");
-              printf("tfp0: %x\n", tfp0);
-              printf("kernel base: 0x%llx\n", kernel_base);
-              */
-             
-             uint64_t kernel_base;
-             //tipsyPIEfp0 = mach_swap_sploit1(offs, &tfp0, &kernel_base);
-             //exploitstatus = Mswap2exploit(offsetsMS, &tfp0, &kernel_base);
-             //exploitstatus = machswap_newexploit2(offsetsMS, &tfp0, &fromViewCkernel_base);
-
-             tfp0 = voucher_swap();
-             tipsyPIEfp0 = tfp0;
-             faketfp0ass = tipsyPIEfp0;
-             
-             //tipsyPIEfp0 = v1ntex(v1ntex_callback, NULL, v1ntex_offs);
-             //if (v1ntex(v1ntex_callback, NULL, v1ntex_offs) == ERR_SUCCESS &&
-             //MACH_PORT_VALID(tfp0) &&
-             //kernel_base = find_kernel_base();//ISADDR(kernel_base) &&
-             // kernel_slide;//ISADDR(kernel_slide)) {
-             // exploit_success = true;
-             //}
-             //break;
-             //tipsyPIEfp0 = voucher_swap();
-             //tipsyPIEfp0 = v3ntex();//v1ntex
-             NSString *msg = [NSString stringWithFormat:localize(@"tfp0:%x"),tipsyPIEfp0];
-             dispatch_async(dispatch_get_main_queue(), ^{
-                 postProgress(msg);
-             });
-             printf("16k - Mach swap2 tfp0:%x\n",tipsyPIEfp0);
-
-            // printf("16k - VS tfp0:%x\n",tipsyPIEfp0);
-             [_jailbreak setTitle:localize(msg) forState:UIControlStateNormal];
-
-             
-             goto end;
-         }else if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"11.2")){
-             
-            /* mach_port_t faketfp0ass = MACH_PORT_NULL;
-             
-             offsets_t *offsetsMS = get_offsetsMS();
-             uint64_t kernel_base;
-             if (offsetsMS == NULL)
-             {
-                 printf("failed to get offsets!");
-                 //return NULL;
-             }
-             offsets_t *v1ntex_offs = get_v1ntex_offsets("/System/Library/Caches/com.apple.kernelcaches/kernelcache");
-             if (offsetsMS == NULL)
-             {
-                 printf("failed to get offsets!");
-                 //return NULL;
-             }
-             
-             tipsyPIEfp0 = v1ntex(v1ntex_callback, NULL, v1ntex_offs);
-
-             exploitstatus = v1ntex_callback(tfp0, fromViewCkernel_base, v1ntex_offs);
-
-             //mach_port_t tfp0;
-             
-             */
-             /*exploitstatus = mach_swap_sploit1(offs, &tfp0, &kernel_base);
-             if (exploitstatus != KERN_SUCCESS)
-             {
-                 printf("failed to run exploit: %x %s\n", exploitstatus, mach_error_string(exploitstatus));
-                 //return NULL;
-             }
-             
-             printf("success!\n");
-             printf("tfp0: %x\n", tfp0);
-             printf("kernel base: 0x%llx\n", kernel_base);
-             */
-             
-             
-            //exploitstatus = Mswap2exploit(offsetsMS, &tfp0, &kernel_base);
-             //exploitstatus = machswap_newexploit2(offsetsMS, &tfp0, &fromViewCkernel_base);
-
-             tfp0 = voucher_swap();
-             tipsyPIEfp0 = tfp0;
-             //faketfp0ass = tipsyPIEfp0;
-             NSString *msg = [NSString stringWithFormat:localize(@"tfp0:%x"),tipsyPIEfp0];
-             dispatch_async(dispatch_get_main_queue(), ^{
-                 postProgress(msg);
-             });
-             //tipsyPIEfp0 = v1ntex(v1ntex_callback, NULL, v1ntex_offs);
-             //if (v1ntex(v1ntex_callback, NULL, v1ntex_offs) == ERR_SUCCESS &&
-             //MACH_PORT_VALID(tfp0) &&
-             //kernel_base = find_kernel_base();//ISADDR(kernel_base) &&
-             // kernel_slide;//ISADDR(kernel_slide)) {
-             // exploit_success = true;
-             //}
-             //break;
-             //tipsyPIEfp0 = voucher_swap();
-             //tipsyPIEfp0 = v3ntex();//v1ntex
-             printf("16k - VS tfp0:%x\n",tipsyPIEfp0);
-             
-             goto end;
-             
+                 printf("tfp0: %x\n", tfp0);
+                 goto end;
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-/////////////////////////////
 /////////////////////////////4k below devices
-
-        /*else if (!strcmp(u.machine, "iPhone6,1") || (!strcmp(u.machine, "iPhone6,2") || (!strcmp(u.machine, "iPhone7,1") || (!strcmp(u.machine, "iPhone7,2"))))) {
-            printf("i5s & i6  & 6+ -----------\n");
-            printf("Hello %s ---------------\n", u.machine);
-            while ((ut = 60 - uptime()) > 0 ) {
-                NSString *msg = [NSString
-                                 stringWithFormat:localize(@"%s %ds"),u.machine, ut+20];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    postProgress(msg);
-                });
-                sleep(1);
-            }
-        }
-        */
-     
-
-        
+  
     }else{
         /*4k kernel pages?*/
-        if (SYSTEM_VERSION_LESS_THAN(@"11.4")){//(kCFCoreFoundationVersionNumber >= 1450.14 && kCFCoreFoundationVersionNumber <= 1452.23)/* //1452.23 - 11.4 - 4k kernel greater or equal iOS 11.4? less than 12*/{
-            
-           /* if (!strcmp(u.machine, "iPad7,1") || (!strcmp(u.machine, "iPad7,2") || (!strcmp(u.machine, "iPad7,4") || (!strcmp(u.machine, "iPad7,5") || (!strcmp(u.machine, "iPad6,3") || (!strcmp(u.machine, "iPad6,4") || (!strcmp(u.machine, "iPad6,7") || (!strcmp(u.machine, "iPad6,8"))))))))) {
-                printf("iPad Pro 9, 10 & 12 in 2nd gen -----------\n");
-                while ((ut = 39 - uptime()) > 0 ) {
-                    NSString *msg = [NSString stringWithFormat:localize(@"%s %ds"),u.machine, ut+21];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        postProgress(msg);
-                    });
-                    sleep(1);
-                }
-                [_jailbreak setTitle:localize(@"11.0-11.3.1 VFS sploit") forState:UIControlStateNormal];
-                tipsyPIEfp0 = vfs_sploit();
-                NSString *msg = [NSString stringWithFormat:localize(@"DONE tfp0:%x"),tipsyPIEfp0];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    postProgress(msg);
-                });
-                sleep(1);printf("vfs 16k - mach tfp0:%x\n",tipsyPIEfp0);
-                goto end;
-            }else if (!strcmp(u.machine, "iPhone6,1") || (!strcmp(u.machine, "iPhone6,2") || (!strcmp(u.machine, "iPhone7,1") || (!strcmp(u.machine, "iPhone7,2"))))) {
-                printf("i5s & i6  & 6+ -----------\n");
-                printf("Hello %s ---------------\n", u.machine);
-                while ((ut = 80 - uptime()) > 0 ) {
-                    
-                    NSString *msg = [NSString
-                                     stringWithFormat:localize(@"%s %ds"),u.machine, ut+20];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        postProgress(msg);
-                    });
-                    sleep(1);
-                }
-                [_jailbreak setTitle:localize(@"11.0-11.3.1 VFS sploit") forState:UIControlStateNormal];
-                tipsyPIEfp0 = vfs_sploit();
-                NSString *msg = [NSString stringWithFormat:localize(@"DONE tfp0:%x"),tipsyPIEfp0];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    postProgress(msg);
-                });
-                sleep(1);printf("vfs 16k - mach tfp0:%x\n",tipsyPIEfp0);
-                goto end;
-            }else if (!strcmp(u.machine, "iPad5,3") || (!strcmp(u.machine, "iPad5,4") || (!strcmp(u.machine, "iPad4,2") || (!strcmp(u.machine, "iPad4,3"))))) {
-                printf("iPad air 1 & 2 -----------\n");
-                while ((ut = 99 - uptime()) > 0 ) {
-                    NSString *msg = [NSString stringWithFormat:localize(@"%s %ds"),u.machine, ut+14];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        postProgress(msg);
-                    });
-                    sleep(1);
-                }
-                [_jailbreak setTitle:localize(@"11.0-11.3.1 VFS sploit") forState:UIControlStateNormal];
-                tipsyPIEfp0 = vfs_sploit();
-                NSString *msg = [NSString stringWithFormat:localize(@"DONE tfp0:%x"),tipsyPIEfp0];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    postProgress(msg);
-                });
-                sleep(1);printf("vfs 16k - mach tfp0:%x\n",tipsyPIEfp0);
-                goto end;
-            }else if (!strcmp(u.machine, "iPad5,1") || (!strcmp(u.machine, "iPad5,2") || (!strcmp(u.machine, "iPad4,7") || (!strcmp(u.machine, "iPad4,8") || (!strcmp(u.machine, "iPad4,9")))))) {
-                printf("iPad mini 4 & 3 -----------\n");
-                
-                while ((ut = 116 - uptime()) > 0 ) {
-                    
-                    NSString *msg = [NSString stringWithFormat:localize(@"%s %ds"),u.machine, ut+4];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        postProgress(msg);
-                    });
-                    sleep(1);
-                }
-                [_jailbreak setTitle:localize(@"11.0-11.3.1 VFS sploit") forState:UIControlStateNormal];
-                tipsyPIEfp0 = vfs_sploit();
-                NSString *msg = [NSString stringWithFormat:localize(@"DONE tfp0:%x"),tipsyPIEfp0];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    postProgress(msg);
-                });
-                sleep(1);printf("vfs 16k - mach tfp0:%x\n",tipsyPIEfp0);
-                goto end;
-            }else if (!strcmp(u.machine, "iPod7,1")) {
-                printf("iPod 6 -----------\n");
-                
-                while ((ut = 116 - uptime()) > 0 ) {
-                    NSString *msg = [NSString stringWithFormat:localize(@"%s %ds"),u.machine, ut+4];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        postProgress(msg);
-                    });
-                    sleep(1);
-                }
-               [_jailbreak setTitle:localize(@"11.0-11.3.1 VFS sploit") forState:UIControlStateNormal];
-                tipsyPIEfp0 = vfs_sploit();
-                
-                NSString *msg = [NSString stringWithFormat:localize(@"DONE tfp0:%x"),tipsyPIEfp0];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    postProgress(msg);
-                });
-                sleep(1);printf("vfs 16k - mach tfp0:%x\n",tipsyPIEfp0);
-                goto end;
-            */ //}
-            
-            [_jailbreak setTitle:localize(@"114 mach_swap 4k") forState:UIControlStateNormal];
-            sleep(1);
-            
-            mach_port_t faketfp0ass = MACH_PORT_NULL;
-            
-            offsets_t *offsetsMS = get_offsetsMS();
-            if (offsetsMS == NULL)
-            {
-                printf("failed to get offsets!");
-                //return NULL;
-            }
-            
-            //mach_port_t tfp0;
-            uint64_t kernel_base;
-            //exploitstatus = Mswap2exploit(offsetsMS, &tfp0, &kernel_base);
-            exploitstatus = machswap_newexploit2(offsetsMS, &tfp0, &fromViewCkernel_base);
-
-            //exploitstatus = mach_swap_sploit1(offs, &tfp0, &kernel_base);
-            printf("tfp0: %x\n", tfp0);
-            printf("kernel base: 0x%llx\n", kernel_base);
-            tipsyPIEfp0 = tfp0;
-            //tipsyPIEfp0 = v3tfp0;
-            faketfp0ass = tipsyPIEfp0;
-            printf("kernel page 4k - machswap2 tfp0:%x\n",tipsyPIEfp0);
-            
-            goto end;
-            
-        }else if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"11.4")){//(kCFCoreFoundationVersionNumber < 1535.12 && kCFCoreFoundationVersionNumber >= 1452.24) /*4k kernel less than ios 12 newer or equal to ios 11.4*/{
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"11.0")){//(kCFCoreFoundationVersionNumber < 1535.12 && kCFCoreFoundationVersionNumber >= 1452.24) /*4k kernel less than ios 12 newer or equal to ios 11.4*/{
             
             [_jailbreak setTitle:localize(@"114 mach_swap2 4k") forState:UIControlStateNormal];
             sleep(1);
@@ -2418,31 +1670,7 @@ end:
             printf("kernel page 4k - machswap2 tfp0:%x\n",tipsyPIEfp0);
             
             goto end;
-        }else if (kCFCoreFoundationVersionNumber >= 1535.12) /*4k kernel ios 12 or newer?*/{
-            
-            [_jailbreak setTitle:localize(@"mach_swap") forState:UIControlStateNormal];
-            offsets_t *offsetsMS =  get_offsetsMS();
-            if (offsetsMS == NULL)
-            {
-                printf("failed to get offsets!");
-            }
-            uint64_t kernel_base;
-            exploitstatus = machswap_newexploit2(offsetsMS, &tfp0, &fromViewCkernel_base);
-
-            //exploitstatus = mach_swap_sploit1(offs, &tfp0, &kernel_base);
-            tipsyPIEfp0 = tfp0;
-            if (exploitstatus != KERN_SUCCESS)
-            {
-                printf("failed to run exploit: %x %s", exploitstatus, mach_error_string(exploitstatus));
-                //return NULL;
-            }
-            
-            printf("kernel page 4k - mach tfp0: %x\n",tipsyPIEfp0);
-
-            goto end;
-            
         }
-
     }
     end:
         
